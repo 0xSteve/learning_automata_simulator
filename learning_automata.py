@@ -28,8 +28,20 @@ class Tsetlin(object):
         # define the initial state as the state leaning toward action one.
         self.current_state = self.N / 2
 
+    # Find the next state given that the teacher rewarded.
     def next_state_on_reward(self):
+        '''Find the next state of the learner, given that the teacher
+           rewarded.'''
         pass
 
+    # Find the next state given that the teacher penalized.
     def next_state_on_penalty(self):
+        '''Find the next state of the learner, given that the teacher
+           penalized.'''
+        pass
+
+    # Determine the next state as the teacher.
+    def environment_response(self):
+        '''Determine the next state of the learner from the perspective
+        of the teacher.'''
         pass
