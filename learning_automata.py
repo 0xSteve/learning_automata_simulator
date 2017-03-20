@@ -34,13 +34,21 @@ class Tsetlin(object):
     def next_state_on_reward(self):
         '''Find the next state of the learner, given that the teacher
            rewarded.'''
-        self.N -= 1
+
+        # I need to know what state is the next loopback state.
+        # There are R actions, and therefore there are 2N/R memory blocks.
+        # If the current state is <= 2N/R in action 1
+        # if 2N/R < current state < 2(2N/R) in action 2
+
+        if(self.current_state > 0):
+            self.current_state -= 1
 
     # Find the next state given that the teacher penalized.
     def next_state_on_penalty(self):
         '''Find the next state of the learner, given that the teacher
            penalized.'''
-        self.N += 1
+        if(self.current_state < self.N):
+            self.current_state += 1
 
     # Determine the next state as the teacher.
     def environment_response(self):
