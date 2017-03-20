@@ -45,3 +45,9 @@ class Tsetlin(object):
         '''Determine the next state of the learner from the perspective
         of the teacher.'''
         pass
+
+    # Run a simulation of a Tsetlin automaton.
+    def simulate(self, n, ensemble_size):
+        '''Run a simulation of a Tsetlin automaton for a size of
+           experiment, n, and a number of experiments, ensemble_size.'''
+        pass
