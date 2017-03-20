@@ -53,8 +53,6 @@ class Tsetlin(object):
 
         # The hard part here is not looping back, but instead jumping to
         # the next 2N / R state.
-        print(self.N / self.R)
-        print(self.current_state % (self.N / self.R))
 
         if(self.current_state % (self.N / self.R) != 0):
             self.current_state += 1
@@ -65,7 +63,7 @@ class Tsetlin(object):
     def environment_response(self):
         '''Determine the next state of the learner from the perspective
         of the teacher.'''
-        response = 0.04  # random()
+        response = 0.1  # random()
         # The penality index is the index of the penalty array.
         penalty_index = self.N % self. R
         print("The penalty index is: " + str(penalty_index) +
@@ -77,7 +75,6 @@ class Tsetlin(object):
             self.next_state_on_reward()
         else:
             # Penalty.
-            print("Penalty!")
             self.next_state_on_penalty()
 
     # Run a simulation of a Tsetlin automaton.

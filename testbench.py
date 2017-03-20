@@ -10,8 +10,8 @@ import learning_automata as la
 # bench, and analytics will be run on it using scipy.
 tsetlin_6_2 = la.Tsetlin(3, 2, [0.05, 0.7])
 
-print(tsetlin_6_2.current_state)
+print("state prior to transition is: " + str(tsetlin_6_2.current_state))
 
 tsetlin_6_2.environment_response()
 
-print(tsetlin_6_2.current_state)
+print("state after to transition is: " + str(tsetlin_6_2.current_state))
