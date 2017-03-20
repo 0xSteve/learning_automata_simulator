@@ -41,9 +41,9 @@ class Tsetlin(object):
         # If the current state is <= 2N/R in action 1
         # if 2N/R < current state < 2(2N/R) in action 2
 
-        if (self.current_state % (2 * self.N / self.R) == 0):
-            self.current_state -= 2 * self.N / self.R
-        elif(self.current_state - (2 * self.N / self.R) != 1):
+        if (self.current_state % (self.N / self.R) == 0):
+            self.current_state -= self.N / self.R
+        elif(self.current_state - (self.N / self.R) != 1):
             self.current_state -= 1
 
     # Find the next state given that the teacher penalized.
@@ -53,11 +53,13 @@ class Tsetlin(object):
 
         # The hard part here is not looping back, but instead jumping to
         # the next 2N / R state.
+        print(self.N / self.R)
+        print(self.current_state % (self.N / self.R))
 
-        if(self.current_state % (2 * self.N / self.R) != 0):
+        if(self.current_state % (self.N / self.R) != 0):
             self.current_state += 1
         else:
-            self.current_state += 2 * self.N / self.R
+            self.current_state += self.N / self.R
 
     # Determine the next state as the teacher.
     def environment_response(self):
