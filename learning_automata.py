@@ -4,6 +4,8 @@
 
 # For now it only contains a Tsetlin 2N,2 automaton.
 
+from random import random
+
 # Write a Tsetlin automaton.
 # A Tsetlin automaton is defined by N memory states, R actions,
 # and c penalties.
@@ -44,7 +46,15 @@ class Tsetlin(object):
     def environment_response(self):
         '''Determine the next state of the learner from the perspective
         of the teacher.'''
-        pass
+        response = random()
+        # The penality index is the index of the penalty array.
+        penalty_index = self.N % self. R == 0
+        if(response < self.c[penalty_index]):
+            # Reward
+            return 0
+        else:
+            # Penalty
+            return 1
 
     # Run a simulation of a Tsetlin automaton.
     def simulate(self, n, ensemble_size):
