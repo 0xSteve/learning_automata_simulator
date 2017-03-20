@@ -34,13 +34,13 @@ class Tsetlin(object):
     def next_state_on_reward(self):
         '''Find the next state of the learner, given that the teacher
            rewarded.'''
-        pass
+        self.N -= 1
 
     # Find the next state given that the teacher penalized.
     def next_state_on_penalty(self):
         '''Find the next state of the learner, given that the teacher
            penalized.'''
-        pass
+        self.N += 1
 
     # Determine the next state as the teacher.
     def environment_response(self):
