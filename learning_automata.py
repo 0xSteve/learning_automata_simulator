@@ -66,7 +66,9 @@ class Tsetlin(object):
         response = 0.04  # random()
         # The penality index is the index of the penalty array.
         penalty_index = self.N % self. R
-        print("The penalty index is: " + str(penalty_index))
+        print("The penalty index is: " + str(penalty_index) +
+              " and the penalty is: " + str(self.c[penalty_index]))
+
         if(response > self.c[penalty_index]):
             # Reward.
             print("Reward!")
