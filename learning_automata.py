@@ -1,4 +1,7 @@
-# Learning_automata.py is a module containing some learning automata.
+'''Learning_automata.py is a module containing some learning automata.'''
+
+# Written by: Steven Porretta.
+
 # For now it only contains a Tsetlin 2N,2 automaton.
 
 # Write a Tsetlin automaton.
