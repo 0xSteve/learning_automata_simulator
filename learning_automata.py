@@ -50,10 +50,10 @@ class Tsetlin(object):
         # The penality index is the index of the penalty array.
         penalty_index = self.N % self. R == 0
         if(response < self.c[penalty_index]):
-            # Reward
+            # Reward.
             return 0
         else:
-            # Penalty
+            # Penalty.
             return 1
 
     # Run a simulation of a Tsetlin automaton.
