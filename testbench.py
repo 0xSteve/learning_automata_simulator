@@ -9,3 +9,9 @@ import learning_automata as la
 # Instead of changing c1 in the LA, it will be modified throught the test
 # bench, and analytics will be run on it using scipy.
 tsetlin_6_2 = la.Tsetlin(3, 2, [0.05, 0.7])
+
+print(tsetlin_6_2.current_state)
+
+tsetlin_6_2.environment_response()
+
+print(tsetlin_6_2.current_state)

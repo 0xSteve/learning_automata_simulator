@@ -64,14 +64,18 @@ class Tsetlin(object):
         '''Determine the next state of the learner from the perspective
         of the teacher.'''
         response = random()
+        print("The response is: " + str(response))
         # The penality index is the index of the penalty array.
-        penalty_index = self.N % self. R == 0
-        if(response < self.c[penalty_index]):
+        penalty_index = self.N % self. R
+        print("The penalty index is: " + str(penalty_index))
+        if(response > self.c[penalty_index]):
             # Reward.
-            return 0
+            print("Reward!")
+            self.next_state_on_reward()
         else:
             # Penalty.
-            return 1
+            print("Penalty!")
+            self.next_state_on_penalty()
 
     # Run a simulation of a Tsetlin automaton.
     def simulate(self, n, ensemble_size):
