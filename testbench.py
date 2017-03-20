@@ -2,3 +2,5 @@
    automata behavior.'''
 
 # Written by: Steven Porretta.
+
+import learning_automata as la

@@ -15,7 +15,21 @@
 # 1 to i.
 
 
-def tsetlin(N, R, c):
+class Tsetlin(object):
     '''Tsetlin automata. N, R positive integers. c a structure
        of penalties from action 1 to action i.'''
-    pass
+
+    def __init__(self, N, R, c):
+        '''initialize a Tsetlin automaton with N memory states,
+           R actions, and c penalty probabilities for each R.'''
+        self.N = 2 * N
+        self.R = R
+        self.c = c
+        # define the initial state as the state leaning toward action one.
+        self.current_state = self.N / 2
+
+    def next_state_on_reward(self):
+        pass
+
+    def next_state_on_penalty(self):
+        pass
