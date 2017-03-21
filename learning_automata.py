@@ -4,7 +4,7 @@
 
 # For now it only contains a Tsetlin 2N,2 automaton.
 
-from random import random
+from random import random, uniform
 
 # Write a Tsetlin automaton.
 # A Tsetlin automaton is defined by N memory states, R actions,
@@ -102,7 +102,14 @@ class Krylov(Tsetlin):
     def next_state_on_penalty(self):
         '''Find the next state of the learner, given that the teacher
            penalized.'''
-        pass
+
+        # If this number is greater than 0.5, then penalize the learner.
+        is_penalty = uniform(0, 1)
+
+        if(is_penalty > 0.5):
+            Tsetlin.next_state_on_penalty()
+        else:
+            Tsetlin.next_state_on_reward()
 
 
 class Lri(object):
