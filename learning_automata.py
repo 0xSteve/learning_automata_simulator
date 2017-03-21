@@ -4,7 +4,7 @@
 
 # For now it only contains a Tsetlin 2N,2 automaton.
 
-from random import random, uniform
+from random import uniform
 
 # Write a Tsetlin automaton.
 # A Tsetlin automaton is defined by N memory states, R actions,
@@ -67,7 +67,7 @@ class Tsetlin(object):
     def environment_response(self):
         '''Determine the next state of the learner from the perspective
         of the teacher.'''
-        response = uniform(0, 1)
+        response = 0.1  # uniform(0, 1)
         # The penality index is the index of the penalty array.
         penalty_index = self.N % self. R
         # print("The penalty index is: " + str(penalty_index) +
@@ -107,9 +107,9 @@ class Krylov(Tsetlin):
         is_penalty = uniform(0, 1)
 
         if(is_penalty > 0.5):
-            Tsetlin.next_state_on_penalty()
+            Tsetlin.next_state_on_penalty(self)
         else:
-            Tsetlin.next_state_on_reward()
+            Tsetlin.next_state_on_reward(self)
 
 
 class Lri(object):

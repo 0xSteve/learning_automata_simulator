@@ -25,4 +25,19 @@ import learning_automata as la
 #
 # # End Tsetlin state translation test.
 
-Krylov_6_2 = la.Krylov(3, 2, [0.5, 0.5])
+krylov = la.Krylov(3, 2, [0.4, 0.5])
+
+print("state prior to transition is: " + str(krylov.current_state))
+
+# force a penalty...
+krylov.environment_response()
+
+print("state after to transition is: " + str(krylov.current_state))
+
+krylov.environment_response()
+
+print("state after to transition is: " + str(krylov.current_state))
+
+krylov.environment_response()
+
+print("state after to transition is: " + str(krylov.current_state))
