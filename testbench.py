@@ -8,10 +8,14 @@ import learning_automata as la
 # Define the initial Tsetlin machine described in Q1 of the assignment.
 # Instead of changing c1 in the LA, it will be modified throught the test
 # bench, and analytics will be run on it using scipy.
-tsetlin_6_2 = la.Tsetlin(3, 2, [0.05, 0.7])
+tsetlin_6_2 = la.Tsetlin(3, 2, [0.5, 0.5])
 
 print("state prior to transition is: " + str(tsetlin_6_2.current_state))
 
-tsetlin_6_2.environment_response()
+# a better test...
 
-print("state after to transition is: " + str(tsetlin_6_2.current_state))
+for i in range(100):
+
+    tsetlin_6_2.environment_response()
+
+    print("state after to transition is: " + str(tsetlin_6_2.current_state))

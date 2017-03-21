@@ -39,11 +39,10 @@ class Tsetlin(object):
         # I need to know what state is the next loopback state.
         # There are R actions, and therefore there are 2N/R memory blocks.
         # If the current state is <= 2N/R in action 1
-        # if 2N/R < current state < 2(2N/R) in action 2
+        # If 2N/R < current state < 2(2N/R) in action 2
 
-        if (self.current_state % (self.N / self.R) == 0):
-            self.current_state -= self.N / self.R
-        elif(self.current_state - (self.N / self.R) != 1):
+        # If the mod is 1, then the current state is the loopback state.
+        if (self.current_state % (self.N / self.R) != 1):
             self.current_state -= 1
 
     # Find the next state given that the teacher penalized.
@@ -63,15 +62,14 @@ class Tsetlin(object):
     def environment_response(self):
         '''Determine the next state of the learner from the perspective
         of the teacher.'''
-        response = 0.1  # random()
+        response = random()
         # The penality index is the index of the penalty array.
         penalty_index = self.N % self. R
-        print("The penalty index is: " + str(penalty_index) +
-              " and the penalty is: " + str(self.c[penalty_index]))
+        # print("The penalty index is: " + str(penalty_index) +
+        #       " and the penalty is: " + str(self.c[penalty_index]))
 
         if(response > self.c[penalty_index]):
             # Reward.
-            print("Reward!")
             self.next_state_on_reward()
         else:
             # Penalty.
