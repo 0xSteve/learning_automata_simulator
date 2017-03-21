@@ -84,4 +84,6 @@ class Tsetlin(object):
     def simulate(self, n, ensemble_size):
         '''Run a simulation of a Tsetlin automaton for a size of
            experiment, n, and a number of experiments, ensemble_size.'''
-        pass
+        for i in range(n):
+            for j in range(ensemble_size):
+                self.environment_response()
