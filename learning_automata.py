@@ -55,8 +55,13 @@ class Tsetlin(object):
 
         if(self.current_state % (self.N / self.R) != 0):
             self.current_state += 1
-        else:
-            self.current_state += self.N / self.R
+        elif(self.current_state % (self.N / self.R) == 0):
+            # Don't really add states, just cycle through N, 2N, 4N, etc.
+            if(self.current_state != self.N):
+                a = (self.N / self.R) % self.N
+                self.current_state = a + self.current_state
+            else:
+                self.current_state = self.N / self.R
 
     # Determine the next state as the teacher.
     def environment_response(self):
