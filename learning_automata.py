@@ -106,7 +106,7 @@ class Krylov(Tsetlin):
         # If this number is greater than 0.5, then penalize the learner.
         is_penalty = uniform(0, 1)
 
-        if(is_penalty > 0.5):
+        if(is_penalty >= 0.5):
             Tsetlin.next_state_on_penalty(self)
         else:
             Tsetlin.next_state_on_reward(self)
