@@ -67,7 +67,7 @@ class Tsetlin(object):
     def environment_response(self):
         '''Determine the next state of the learner from the perspective
         of the teacher.'''
-        response = random()
+        response = uniform(0, 1)
         # The penality index is the index of the penalty array.
         penalty_index = self.N % self. R
         # print("The penalty index is: " + str(penalty_index) +
