@@ -87,3 +87,14 @@ class Tsetlin(object):
         for i in range(n):
             for j in range(ensemble_size):
                 self.environment_response()
+
+
+class Krylov(Tsetlin):
+    '''Krylov automaton.  Inherits from the Tsetlin automaton.'''
+
+    def __init__(self, N, R, c):
+        self.Tsetlin(N, R, c)
+
+
+class Lri(object):
+    '''The Linear R-reward,Inaction-penalty. VSSA.'''
