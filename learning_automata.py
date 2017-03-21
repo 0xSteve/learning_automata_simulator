@@ -93,7 +93,16 @@ class Krylov(Tsetlin):
     '''Krylov automaton.  Inherits from the Tsetlin automaton.'''
 
     def __init__(self, N, R, c):
-        self.Tsetlin(N, R, c)
+        '''The constructor of a Krylov is exactly the same as the Tsetlin.
+           The only difference between the machines is how penalties are
+           handled.'''
+
+        Tsetlin.__init__(self, N, R, c)
+
+    def next_state_on_penalty(self):
+        '''Find the next state of the learner, given that the teacher
+           penalized.'''
+        pass
 
 
 class Lri(object):
