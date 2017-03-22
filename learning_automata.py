@@ -24,22 +24,26 @@ class LA(object):
     '''A learning automaton.'''
 
     def __init__(self):
-        '''set up states, penalties, etc.'''
+        '''Set up states, penalties, etc.'''
         pass
 
     def next_state_on_reward(self):
-        '''define the state translation, or action selection,
+        '''Define the state translation, or action selection,
            on reward.'''
         pass
 
     def next_state_on_penalty(self):
-        '''define the state translation, or action selection,
+        '''Define the state translation, or action selection,
            on penalty.'''
         pass
 
     def environment_response(self):
-        '''determine the reward, and then call for the appropriate
+        '''Determine the reward, and then call for the appropriate
            response.'''
+        pass
+
+    def simulate(self):
+        '''Define the simulation for the automaton.'''
         pass
 
 
@@ -108,12 +112,14 @@ class Tsetlin(LA):
 
     # Run a simulation of a Tsetlin automaton.
     # It might be best to put this function somewhere else...
-    def simulate(self, n, ensemble_size):
+    def simulate(self, n, ensemble_size, monitor):
         '''Run a simulation of a Tsetlin automaton for a size of
            experiment, n, and a number of experiments, ensemble_size.'''
-        for i in range(n):
-            for j in range(ensemble_size):
+
+        for i in range(ensemble_size):
+            for j in range(n):
                 self.environment_response()
+                monitor.current_state[ensemble_size].append(self.current_state)
 
 
 class Krylov(Tsetlin):
@@ -174,3 +180,9 @@ class Linear(LA):
         else:
             # Penalty.
             self.next_state_on_penalty()
+
+    def simulate(self, ensemble_size, monitor):
+        '''Assume that the depth of the automaton is determined by k >= n
+           depth of the automaton.'''
+        # This definition of the simulation can always be changed.
+        pass
