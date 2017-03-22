@@ -211,4 +211,8 @@ class Linear(LA):
         '''Assume that the depth of the automaton is determined by k >= n
            depth of the automaton.'''
         # This definition of the simulation can always be changed.
-        pass
+        # I will need to use max(list) for this to avoid numpy. In this
+        # case, the list is the action probability vector p.
+        for i in range(ensemble_size):
+            while (max(self.p) < 1):
+                self.environment_response()
