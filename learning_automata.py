@@ -57,11 +57,13 @@ class Tsetlin(LA):
         '''initialize a Tsetlin automaton with N memory states,
            R actions, and c penalty probabilities for each R.'''
         self.N = 2 * N
+        self.n = N
         self.R = R
         self.c = c
         # define the initial state as the state leaning toward action one.
-        self.current_state = self.N / R
+        self.current_state = int(self.N / R)
         self.states = []
+        self.ensemble_average = 0
 
     def stationary_probability(self, is_analytic):
         probability = 0
@@ -133,13 +135,19 @@ class Tsetlin(LA):
         '''Run a simulation of a Tsetlin automaton for a size of
            experiment, n, and a number of experiments, ensemble_size.'''
 
-        self.states.append(np.zeros(self.N))
-
         for i in range(ensemble_size):
+            self.states.append(np.zeros(self.N))
             for j in range(n):
                 self.environment_response()
                 self.states[i][self.current_state] += 1
-            self.states[i] / n
+            temp = np.array(self.states)
+            self.ensemble_average = sum(temp) / (n * ensemble_size)
+            # Not done yet. The ensemble average now has 2N, and that
+            # means the first index needs to be removed, and the last
+            # half.  This is because we start cointing from index 0
+            # not index 1.  So there should be N - 1 states in a 0
+            # base system.
+            self.ensemble_average = self.ensemble_average[0:self.n]
 
 
 class Krylov(Tsetlin):
