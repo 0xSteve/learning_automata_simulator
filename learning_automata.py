@@ -147,7 +147,7 @@ class Tsetlin(LA):
             # half.  This is because we start counting from index 0
             # not index 1.  So there should be N - 1 states in a 0
             # base system.
-            self.ensemble_average = self.ensemble_average[0:self.n]
+            self.ensemble_average = self.ensemble_average[1:self.n]
 
 
 class Krylov(Tsetlin):
