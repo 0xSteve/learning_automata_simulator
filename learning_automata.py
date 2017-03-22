@@ -151,11 +151,20 @@ class Linear(LA):
     # the init needs the initial probability vector.
     # for the sake of simplicity, assume only 2 actions, but parameterize
     # for more.
-    # Need a meaningful value for a.  Have to check the books for that.
+    # Need a meaningful value for a. Have to check the books for that.
 
     def __init__(self, a, p, c):
         '''p and c are vector quantities.'''
         pass
+
+    def find_action_distribution(self, p):
+        '''Find the probability distribution of the action vector.'''
+        action_distribution = []
+        sigma = 0
+        for i in range(len(action_distribution)):
+            sigma += p[i]
+            action_distribution.append[sigma]
+        return action_distribution
 
     def next_state_on_penalty(self):
         '''Do nothing, for now...'''
@@ -163,9 +172,17 @@ class Linear(LA):
 
     def next_state_on_reward(self):
         '''increase probabilities by a factor of a.'''
+
+        # Before getting too deep into defining this. Note that the
+        # probability of choosing an action is determined by p1 p2, pn.
+        # This function needs to compute the probability of selecting an
+        # action. It does not make linear state translations like the
+        # previous automatons.
+
+        # is_action = uniform(0, 1)
         pass
 
-    # Not sure exactly what to do with this.  Need to do a little more
+    # Not sure exactly what to do with this. Need to do a little more
     # reading to fully comprehend state translations.
     def environment_response(self):
         '''Determine the next state of the learner from the perspective
