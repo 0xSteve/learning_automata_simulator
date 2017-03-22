@@ -48,6 +48,6 @@ import learning_automata as la
 lri = la.Linear(1, [0.5, 0.5], [0.4, 0.6], 20)
 kry = la.Krylov(18, 2, [0.65, 0.7])
 tset = la.Tsetlin(13, 2, [0.65, 0.7])
-tset.simulate(50, 30001)
+tset.simulate(10, 500)
 print(tset.action_average)
 print(tset.actions)
