@@ -61,6 +61,21 @@ class Tsetlin(LA):
         # define the initial state as the state leaning toward action one.
         self.current_state = self.N / R
 
+    def stationary_probability(self, is_analytic):
+        probability = 0
+        if(is_analytic):
+            probability = self.stationary_probability_analytic()
+        else:
+            probability = self.stationary_probability_estimate()
+
+        return probability
+
+    def stationary_probability_analytic(self):
+        pass
+
+    def stationary_probability_estimate(self):
+        pass
+
     # Find the next state given that the teacher rewarded.
     def next_state_on_reward(self):
         '''Find the next state of the learner, given that the teacher
