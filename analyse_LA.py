@@ -6,6 +6,7 @@
 
 class Tsetlin(object):
     '''Analysis tools for the Tsetlin automaton.'''
+
     def stationary_probability(self, is_analytic, c):
         '''This only assumes reasonable functionality for a two action
            automaton, due to time constraints.'''
@@ -34,4 +35,13 @@ class Tsetlin(object):
     def stationary_probability_estimate(self, c, desired_accuracy=0.95):
         '''Find the probability of selecting the mininum penalties for a 2
            action automaton with a desired accuracy. (95% by default)'''
-        pass
+
+        # Need range betwee 0, 1. Accuracy is in {0, 1}.
+        low = 0
+        high = 1
+
+        # Need to know the desired probability limit to determine the accuracy.
+        probability = self.stationary_probability_analytic(self.c, self.N)
+        if(c[0] > c[1]):
+            probability = 1 - probability
+       
