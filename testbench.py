@@ -43,3 +43,5 @@ import learning_automata as la
 
 # print("state after to transition is: " + str(krylov.current_state))
 # # End Krylov state transition test.
+
+lri = la.Linear()

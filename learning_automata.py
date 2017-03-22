@@ -67,7 +67,7 @@ class Tsetlin(object):
     def environment_response(self):
         '''Determine the next state of the learner from the perspective
         of the teacher.'''
-        response = 0.1  # uniform(0, 1)
+        response = uniform(0, 1)
         # The penality index is the index of the penalty array.
         penalty_index = self.N % self. R
         # print("The penalty index is: " + str(penalty_index) +
@@ -81,6 +81,7 @@ class Tsetlin(object):
             self.next_state_on_penalty()
 
     # Run a simulation of a Tsetlin automaton.
+    # It might be best to put this function somewhere else...
     def simulate(self, n, ensemble_size):
         '''Run a simulation of a Tsetlin automaton for a size of
            experiment, n, and a number of experiments, ensemble_size.'''
@@ -112,5 +113,37 @@ class Krylov(Tsetlin):
             Tsetlin.next_state_on_reward(self)
 
 
-class Lri(object):
+class Linear(object):
     '''The Linear R-reward,Inaction-penalty. VSSA.'''
+
+# the init needs the initial probability vector.
+# for the sake of simplicity, assume only 2 actions.
+# need value of k, and value of a.
+
+    def __init__(self, k, a, p, c):
+        '''p and c are vector quantities.'''
+        pass
+
+    def next_state_on_penalty(self):
+        '''Do nothing, for now...'''
+        pass
+
+    def next_state_on_reward(self):
+        '''increase probabilities by a factor of a.'''
+        pass
+
+    # Not sure exactly what to do with this.  Need to do a little more
+    # reading to fully comprehend state translations.
+    def environment_response(self):
+        '''Determine the next state of the learner from the perspective
+        of the teacher.'''
+        response = uniform(0, 1)
+        # The penalty index is the index of the penalty array.
+        # penalty_index = self.N % self. R
+
+        if(response > self.c[0]):  # penalty_index]):
+            # Reward.
+            self.next_state_on_reward()
+        else:
+            # Penalty.
+            self.next_state_on_penalty()
