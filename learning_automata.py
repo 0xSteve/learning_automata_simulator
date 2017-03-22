@@ -164,7 +164,18 @@ class Linear(LA):
         for i in range(len(action_distribution)):
             sigma += p[i]
             action_distribution.append[sigma]
+
         return action_distribution
+
+    def action_index(self, p):
+        '''Find the next action for a Linear automaton.'''
+        is_action = uniform(0, 1)
+        action_distribution = self.find_action_distribution(self.p)
+        # If the cumulative distribution is less than the value, then that
+        # is the desired index.
+        for i in range(len(action_distribution)):
+            if(is_action < action_distribution[i]):
+                return i
 
     def next_state_on_penalty(self):
         '''Do nothing, for now...'''
@@ -178,8 +189,6 @@ class Linear(LA):
         # This function needs to compute the probability of selecting an
         # action. It does not make linear state translations like the
         # previous automatons.
-
-        # is_action = uniform(0, 1)
         pass
 
     # Not sure exactly what to do with this. Need to do a little more
