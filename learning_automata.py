@@ -135,9 +135,9 @@ class Tsetlin(LA):
     def action_count(self):
         if(self.current_state <= self.n):
             # In action 1.
-            self.action[0] += 1
+            self.actions[0] += 1
         else:
-            self.action[1] += 1
+            self.actions[1] += 1
 
     # Run a simulation of a Tsetlin automaton.
     # It might be best to put this function somewhere else...
@@ -160,7 +160,7 @@ class Tsetlin(LA):
             # not index 1.  So there should be N - 1 states in a 0
             # base system.
             self.ensemble_average = self.ensemble_average[1:self.n]
-            self.action_average = sum(self.action_count) / (n * ensemble_size)
+            self.action_average = sum(self.actions) / (n * ensemble_size)
 
 
 class Krylov(Tsetlin):
