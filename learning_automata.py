@@ -63,7 +63,9 @@ class Tsetlin(LA):
         # define the initial state as the state leaning toward action one.
         self.current_state = int(self.N / R)
         self.states = []
+        self.actions = np.zeros(self.R)
         self.ensemble_average = 0
+        self.action_average = 0
 
     def stationary_probability(self, is_analytic):
         probability = 0
@@ -129,6 +131,14 @@ class Tsetlin(LA):
             # Penalty.
             self.next_state_on_penalty()
 
+    # for action counting pretend it is always 2 action for now.
+    def action_count(self):
+        if(self.current_state <= self.n):
+            # In action 1.
+            self.action[0] += 1
+        else:
+            self.action[1] += 1
+
     # Run a simulation of a Tsetlin automaton.
     # It might be best to put this function somewhere else...
     def simulate(self, n, ensemble_size):
@@ -140,6 +150,8 @@ class Tsetlin(LA):
             for j in range(n):
                 self.environment_response()
                 self.states[i][self.current_state] += 1
+                self.action_count()
+
             temp = np.array(self.states)
             self.ensemble_average = sum(temp) / (n * ensemble_size)
             # Not done yet. The ensemble average now has 2N, and that
@@ -148,6 +160,7 @@ class Tsetlin(LA):
             # not index 1.  So there should be N - 1 states in a 0
             # base system.
             self.ensemble_average = self.ensemble_average[1:self.n]
+            self.action_average = sum(self.action_count) / (n * ensemble_size)
 
 
 class Krylov(Tsetlin):
