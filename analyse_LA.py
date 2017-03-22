@@ -31,5 +31,7 @@ class Tsetlin(object):
 
         return p1_inf
 
-    def stationary_probability_estimate(self):
+    def stationary_probability_estimate(self, c, desired_accuracy=0.95):
+        '''Find the probability of selecting the mininum penalties for a 2
+           action automaton with a desired accuracy. (95% by default)'''
         pass
