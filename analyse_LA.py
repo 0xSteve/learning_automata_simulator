@@ -32,6 +32,19 @@ class Tsetlin(object):
 
         return p1_inf
 
+    def has_accuracy(self, desired_accuracy, current_probability):
+        '''Return true, if the probability vector is within the desired
+           accuracy parameter.'''
+        desired_percent_diff = 1 - desired_accuracy
+        # Need to know the desired probability limit to determine the accuracy.
+        probability = self.stationary_probability_analytic(self.c, self.N)
+        denom = (probability + current_probability) / 2
+        percent_diff = abs(probability - current_probability) / denom
+        if(percent_diff <= desired_percent_diff):
+            return True
+
+        return False
+
     def stationary_probability_estimate(self, c, desired_accuracy=0.95):
         '''Find the probability of selecting the mininum penalties for a 2
            action automaton with a desired accuracy. (95% by default)'''
@@ -39,9 +52,13 @@ class Tsetlin(object):
         # Need range betwee 0, 1. Accuracy is in {0, 1}.
         low = 0
         high = 1
+        mid = 0
 
-        # Need to know the desired probability limit to determine the accuracy.
-        probability = self.stationary_probability_analytic(self.c, self.N)
-        if(c[0] > c[1]):
-            probability = 1 - probability
-       
+        computed_probability = 0
+
+        while(True):
+            mid = (low + high) / 2
+            a = self.stationary_probability_analytic(self.c, mid)
+            computed_probability = a
+            if(self.has_accuracy(desired_accuracy, computed_probability)):
+                return mid
