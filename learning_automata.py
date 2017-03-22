@@ -119,10 +119,10 @@ class Tsetlin(LA):
         '''Determine the next state of the learner from the perspective
         of the teacher.'''
         response = uniform(0, 1)
-        # The penality index is the index of the penalty array.
-        penalty_index = self.N % self. R
-        # print("The penalty index is: " + str(penalty_index) +
-        #       " and the penalty is: " + str(self.c[penalty_index]))
+        # The penality index is the index of the penalty array. Do 2 action for now
+        penalty_index = 1
+        if(self.current_state <= self.n):
+            penalty_index = 0
 
         if(response > self.c[penalty_index]):
             # Reward.
@@ -133,6 +133,7 @@ class Tsetlin(LA):
 
     # for action counting pretend it is always 2 action for now.
     def action_count(self):
+        print(self.current_state)
         if(self.current_state <= self.n):
             # In action 1.
             self.actions[0] += 1
