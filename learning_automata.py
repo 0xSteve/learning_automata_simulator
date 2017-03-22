@@ -64,7 +64,6 @@ class Tsetlin(LA):
         self.current_state = int(self.N / R)
         self.states = []
         self.actions = np.zeros(self.R)
-        self.ensemble_average = 0
         self.action_average = 0
 
     def stationary_probability(self, is_analytic):
@@ -122,7 +121,10 @@ class Tsetlin(LA):
         # The penality index is the index of the penalty array. Do 2 action for now
         penalty_index = 1
         if(self.current_state <= self.n):
+            self.actions[0] += 1
             penalty_index = 0
+        else:
+            self.actions[1] += 1
 
         if(response > self.c[penalty_index]):
             # Reward.
@@ -150,18 +152,8 @@ class Tsetlin(LA):
             self.states.append(np.zeros(self.N))
             for j in range(n):
                 self.environment_response()
-                self.states[i][self.current_state] += 1
-                self.action_count()
 
-            temp = np.array(self.states)
-            self.ensemble_average = sum(temp) / (n * ensemble_size)
-            # Not done yet. The ensemble average now has 2N, and that
-            # means the first index needs to be removed, and the last
-            # half.  This is because we start counting from index 0
-            # not index 1.  So there should be N - 1 states in a 0
-            # base system.
-            self.ensemble_average = self.ensemble_average[1:self.n]
-            self.action_average = sum(self.actions) / (n * ensemble_size)
+        self.action_average = self.actions / (n * ensemble_size)
 
 
 class Krylov(Tsetlin):
