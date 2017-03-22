@@ -144,7 +144,7 @@ class Tsetlin(LA):
             self.ensemble_average = sum(temp) / (n * ensemble_size)
             # Not done yet. The ensemble average now has 2N, and that
             # means the first index needs to be removed, and the last
-            # half.  This is because we start cointing from index 0
+            # half.  This is because we start counting from index 0
             # not index 1.  So there should be N - 1 states in a 0
             # base system.
             self.ensemble_average = self.ensemble_average[0:self.n]
