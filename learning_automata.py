@@ -5,6 +5,7 @@
 # For now it only contains a Tsetlin 2N,2 automaton.
 
 from random import uniform
+import numpy as np
 
 # Write a Tsetlin automaton.
 # A Tsetlin automaton is defined by N memory states, R actions,
@@ -60,6 +61,7 @@ class Tsetlin(LA):
         self.c = c
         # define the initial state as the state leaning toward action one.
         self.current_state = self.N / R
+        self.states = []
 
     def stationary_probability(self, is_analytic):
         probability = 0
@@ -127,14 +129,17 @@ class Tsetlin(LA):
 
     # Run a simulation of a Tsetlin automaton.
     # It might be best to put this function somewhere else...
-    def simulate(self, n, ensemble_size, monitor):
+    def simulate(self, n, ensemble_size):
         '''Run a simulation of a Tsetlin automaton for a size of
            experiment, n, and a number of experiments, ensemble_size.'''
+
+        self.states.append(np.zeros(self.N))
 
         for i in range(ensemble_size):
             for j in range(n):
                 self.environment_response()
-                monitor.current_state[ensemble_size].append(self.current_state)
+                self.states[i][self.current_state] += 1
+            self.states[i] / n
 
 
 class Krylov(Tsetlin):
@@ -168,9 +173,12 @@ class Linear(LA):
     # for more.
     # Need a meaningful value for a. Have to check the books for that.
 
-    def __init__(self, a, p, c):
+    def __init__(self, a, p, c, k):
         '''p and c are vector quantities.'''
-        pass
+        self.a = a
+        self. p = p
+        self.c = c
+        self.k = k
 
     def find_action_distribution(self, p):
         '''Find the probability distribution of the action vector.'''
@@ -222,7 +230,7 @@ class Linear(LA):
             # Penalty.
             self.next_state_on_penalty()
 
-    def simulate(self, ensemble_size, monitor):
+    def simulate(self, ensemble_size):
         '''Assume that the depth of the automaton is determined by k >= n
            depth of the automaton.'''
         # This definition of the simulation can always be changed.

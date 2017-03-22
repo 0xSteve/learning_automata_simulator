@@ -4,6 +4,7 @@
 # Written by: Steven Porretta.
 
 import learning_automata as la
+# import analyse_LA as ala
 
 # Define the initial Tsetlin machine described in Q1 of the assignment.
 # Instead of changing c1 in the LA, it will be modified throught the test
@@ -44,4 +45,7 @@ import learning_automata as la
 # print("state after to transition is: " + str(krylov.current_state))
 # # End Krylov state transition test.
 
-lri = la.Linear(1, [0.5, 0.5], [0.4, 0.6])
+lri = la.Linear(1, [0.5, 0.5], [0.4, 0.6], 20)
+kry = la.Krylov(18, 2, [0.05, 0.7])
+tset = la.Tsetlin(18, 2, [0.05 / 2, 0.7 / 2])
+tset.simulate(10, 5)
