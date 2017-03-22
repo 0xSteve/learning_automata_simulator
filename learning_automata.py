@@ -16,8 +16,34 @@ from random import uniform
 # c is a vector quantity indicating the penalties for actions
 # 1 to i.
 
+# There should be an abstract class that defines the important parameters
+# of a learning automaton, shared by all learning automata.
 
-class Tsetlin(object):
+
+class LA(object):
+    '''A learning automaton.'''
+
+    def __init__(self):
+        '''set up states, penalties, etc.'''
+        pass
+
+    def next_state_on_reward(self):
+        '''define the state translation, or action selection,
+           on reward.'''
+        pass
+
+    def next_state_on_penalty(self):
+        '''define the state translation, or action selection,
+           on penalty.'''
+        pass
+
+    def environment_response(self):
+        '''determine the reward, and then call for the appropriate
+           response.'''
+        pass
+
+
+class Tsetlin(LA):
     '''Tsetlin automata. N, R positive integers. c a structure
        of penalties from action 1 to action i. First state starts at 1 not
        0.'''
@@ -113,14 +139,15 @@ class Krylov(Tsetlin):
             Tsetlin.next_state_on_reward(self)
 
 
-class Linear(object):
-    '''The Linear R-reward,Inaction-penalty. VSSA.'''
+class Linear(LA):
+    '''The Linear Reward-Inaction model (for now).'''
 
-# the init needs the initial probability vector.
-# for the sake of simplicity, assume only 2 actions.
-# need value of k, and value of a.
+    # the init needs the initial probability vector.
+    # for the sake of simplicity, assume only 2 actions, but parameterize
+    # for more.
+    # Need a meaningful value for a.  Have to check the books for that.
 
-    def __init__(self, k, a, p, c):
+    def __init__(self, a, p, c):
         '''p and c are vector quantities.'''
         pass
 
