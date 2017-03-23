@@ -212,7 +212,7 @@ class Linear(LA):
 
     def next_state_on_penalty(self):
         '''Do nothing, for now...'''
-        pass
+        self.last_action = self.action_index()
 
     def next_state_on_reward(self):
         '''increase probabilities by a factor of k.'''
@@ -257,22 +257,19 @@ class Linear(LA):
             # The action average
             self.action_average = self.act1 / (self.act1 + self.act2)
 
-    def find_best_lambda(self, low=0.0001, high=0.9999, desired_accuracy=0.95):
-        last_computed = -1  # make sure this fails the first time.
-        while(low <= high):
+    def find_best_lambda(self, low=0, high=1, desired_accuracy=0.95):
+        while(low < high):
             self.k = (high + low) / 2
             self.act1 = 0
             self.act2 = 0
-            self.simulate(1000)
+            self.p = [0.5, 0.5]
+            self.simulate(10000)
             print("Low " + str(low) + " High " + str(high))
             computed_accuracy = self.action_average
             print("The computed accuracy is " + str(computed_accuracy))
             # print("The desired accuracy is " + str(desired_accuracy))
-            if(computed_accuracy >= desired_accuracy):
-                break
-            last_computed = computed_accuracy
-            if(last_computed >= computed_accuracy):
-                low += 0.01
+            if(computed_accuracy > desired_accuracy):
+                high = self.k
             else:
-                high -= 0.01
-        return self.k
+                low = self.k
+        return 1 - self.k
