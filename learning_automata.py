@@ -196,22 +196,16 @@ class Linear(LA):
         '''Find the next action for a Linear automaton.'''
         is_action = uniform(0, 1)
         action_distribution = self.find_action_distribution()
-        # print("The action distrib is " + str(action_distribution))
-        # print("The action is " + str(is_action))
-        # If the cumulative distribution is less than the value, then that
-        # is the desired index.
         for i in range(len(action_distribution)):
             if(is_action < action_distribution[i]):
                 if(i == 0):
                     self.act1 += 1
-                    # print("act1 count " + str(self.act1))
-                else:
-                    self.act2 += 1
-                    # print("act2 count " + str(self.act2))
-                return i + 1  # element {1,2}
+                    return 1
+        self.act2 += 1
+        return 2
 
     def next_state_on_penalty(self):
-        '''Do nothing, for now...'''
+        '''Do nothing, other than pick a action.'''
         self.last_action = self.action_index()
 
     def next_state_on_reward(self):
@@ -248,28 +242,33 @@ class Linear(LA):
     def simulate(self, ensemble_size):
         '''Assume that the depth of the automaton is determined by k >= n
            depth of the automaton.'''
-
         for i in range(ensemble_size):
+            self.p = [0.5, 0.5]
             self.last_action = self.action_index()
-            while(max(self.p) < 0.99):
+            # n = 0
+            while(max(self.p) < 0.9):
                 self.environment_response()
-
+                # print(self.p)
+                # print(self.last_action)
+                # if(n == 10000):
+                #     break
+                # n += 1
+        if(self.p[0] >= 0.9):
             self.action_average = self.act1 / (self.act1 + self.act2)
+        else:
+            self.action_average = 0
 
-    def find_best_lambda(self, low=0, high=1, desired_accuracy=0.95):
+    def find_best_lambda(self, low=0, high=0.99, desired_accuracy=0.95):
+        min_k = 0
         while(low < high):
-            mid = (low + high) / 2
-            self.k = mid
             self.act1 = 0
             self.act2 = 0
-            self.p = [0.5, 0.5]
-            self.simulate(10000)
-            print("Low " + str(low) + " High " + str(high))
-            computed_accuracy = self.action_average
-            print("The computed accuracy is " + str(computed_accuracy))
-            # print("The desired accuracy is " + str(desired_accuracy))
-            if(computed_accuracy > desired_accuracy):
+            self.simulate(5)
+            print("Low = " + str(low) + " High = " + str(high) + " Acc is " + str(self.action_average >= desired_accuracy))
+            if(self.action_average >= desired_accuracy):
                 high = self.k
+                min_k = self.k
             else:
                 low = self.k
-        return 1 - self.k
+            self.k = (low + high) / 2
+        return 1 - min_k
