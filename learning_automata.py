@@ -283,7 +283,7 @@ class Linear(LA):
                 high = mid
                 if(mini == mid):
                     break
-                mini = mid
+                mini = mid - 1
             else:
-                low = mid
+                low = mid + 1
         return 1 - mini
