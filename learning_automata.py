@@ -178,6 +178,7 @@ class Linear(LA):
         self.p = p
         self.c = c
         self.k = k
+        self.last_action = 0
 
     def find_action_distribution(self):
         '''Find the probability distribution of the action vector.'''
@@ -193,7 +194,6 @@ class Linear(LA):
         '''Find the next action for a Linear automaton.'''
         is_action = uniform(0, 1)
         action_distribution = self.find_action_distribution()
-        print("The action distribution is: " + str(action_distribution))
         # If the cumulative distribution is less than the value, then that
         # is the desired index.
         for i in range(len(action_distribution)):
@@ -208,15 +208,15 @@ class Linear(LA):
         '''increase probabilities by a factor of k.'''
         # so if action 1 is chosen increase by k*p1,
         # otherwise increase p1 by (1-k)p2.
-        action = self.action_index()
-        if(action == 1):
+        self.last_action = self.action_index()
+        if(self.last_action == 2):
             # Increase by kp1
             self.p[0] = self.p[0] * self.k
             self.p[1] = 1 - self.p[0]
 
         else:
             # increase by (1-k)p2
-            self.p[0] = self.p[1] * (1 - self.k)
+            self.p[0] = 1 - self.p[1] * self.k
             self.p[1] = 1 - self.p[0]
 
     # Not sure exactly what to do with this. Need to do a little more
@@ -228,7 +228,7 @@ class Linear(LA):
         # The penalty index is the index of the penalty array.
         # penalty_index = self.N % self. R
 
-        if(response > self.c[0]):  # penalty_index]):
+        if(response > self.c[self.last_action - 1]):
             # Reward.
             self.next_state_on_reward()
         else:
@@ -242,6 +242,7 @@ class Linear(LA):
         # I will need to use max(list) for this to avoid numpy. In this
         # case, the list is the action probability vector p.
         for i in range(ensemble_size):
+
             while (max(self.p) < 1):
                 self.environment_response()
                 print(self.p)
