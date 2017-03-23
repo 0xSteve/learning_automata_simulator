@@ -33,7 +33,7 @@ class Tsetlin(object):
 
         computed_accuracy = 0
         # Apparently, the internet knows all... googled binary search lel.
-        while low <= high:
+        while(low <= high):
             mid = int((low + high) / 2)
             a = Tsetlin.stationary_probability_analytic(c, mid)
             computed_accuracy = a

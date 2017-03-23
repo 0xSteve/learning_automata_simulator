@@ -121,7 +121,6 @@ class Tsetlin(LA):
 
     # for action counting pretend it is always 2 action for now.
     def action_count(self):
-        print(self.current_state)
         if(self.current_state <= self.n):
             # In action 1.
             self.actions[0] += 1
@@ -179,6 +178,9 @@ class Linear(LA):
         self.c = c
         self.k = k
         self.last_action = 0
+        self.average_time = 0
+        self.act1 = 0
+        self.act2 = 0
 
     def find_action_distribution(self):
         '''Find the probability distribution of the action vector.'''
@@ -198,6 +200,12 @@ class Linear(LA):
         # is the desired index.
         for i in range(len(action_distribution)):
             if(is_action < action_distribution[i]):
+                if(i == 0):
+                    self.act1 += 1
+                    print("act1 count " + str(self.act1))
+                else:
+                    self.act2 += 1
+                    print("act2 count " + str(self.act2))
                 return i + 1  # element {1,2}
 
     def next_state_on_penalty(self):
@@ -209,11 +217,11 @@ class Linear(LA):
         # so if action 1 is chosen increase by k*p1,
         # otherwise increase p1 by (1-k)p2.
         self.last_action = self.action_index()
+        # print("the next action is " + str(self.last_action))
         if(self.last_action == 2):
             # Increase by kp1
             self.p[0] = self.p[0] * self.k
             self.p[1] = 1 - self.p[0]
-
         else:
             # increase by (1-k)p2
             self.p[0] = 1 - self.p[1] * self.k
@@ -241,8 +249,41 @@ class Linear(LA):
         # This definition of the simulation can always be changed.
         # I will need to use max(list) for this to avoid numpy. In this
         # case, the list is the action probability vector p.
+        sigma = []
+        sign = []
         for i in range(ensemble_size):
-
+            # Pick an action!
+            self.last_action = self.action_index()
+            n = 0
             while (max(self.p) < 1):
                 self.environment_response()
-                print(self.p)
+                n += 1
+            sigma.append(self.p)
+            sign.append(n)
+        temp = np.array(sigma)
+        self.action_average = self.act1 / (self.act1 + self.act2)
+        temp = np.array(sign)
+        self.average_time = sum(temp) / ensemble_size
+
+    def find_best_lambda(self, low=0, high=99, desired_accuracy=0.95):
+        mini = 0
+        while(low < high):
+            mid = (low + high) / 2
+            self.k = mid
+            self.act1 = 0
+            self.act2 = 0
+            self.simulate(10000)
+            # print("Low " + str(low) + " High " + str(high))
+            # print("Average action: " + str(self.action_average))
+            computed_accuracy = round(self.action_average, 2)
+            # print("The computed accuracy is " + str(computed_accuracy))
+            # print("The desired accuracy is " + str(desired_accuracy))
+            print(computed_accuracy >= desired_accuracy)
+            if(computed_accuracy >= desired_accuracy):
+                high = mid
+                if(mini == mid):
+                    break
+                mini = mid
+            else:
+                low = mid
+        return 1 - mini
