@@ -29,7 +29,7 @@ c1 = 0.05
 #     c1 = round(c1, 2)
 lri = la.Linear([0.5, 0.5], [c1, c2], 0.1)
 best = lri.find_best_lambda()
-for i in range(0, 7):
+for i in range(0, 10):
     print("c1 = " + str(c1) + " c2 = " + str(c2))
     print("Best lambda approaches: " + str(best))
     c1 += 0.1
