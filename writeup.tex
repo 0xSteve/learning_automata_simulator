@@ -326,7 +326,7 @@ Mean time to converge in steps = 195115
 
 \end{lstlisting}
 From the above, we see some good, and some bad.  Of course, the $L_{R-I}$ automaton should never produce a static value for $\lambda_R$.  It is possible that the binary search is incorrect, but it is such a simple algorithm it is likely that there is average action negotiation errors due to a lack of encapsulation in python. It would be reasonable if the value of $\lambda_R$ would decrease as $c_1$ approaches $c_2$, much in the same way that it is reasonable to see that the mean discrete time increases as $c_1$ approaches $c_2$.
-
+\clearpage
 \section{Concluding Remarks}
     The Krylov and Tsetlin automata work as expected within the parameters of reasonable rounding error set out by languages like python.  In the worst case, we can observe outlier data at times when running that correspond to a percent difference of $< 2\%$, which is to be expected of a language like python which is known for rounding issues with iterative arithmetic.  From their output it can be observed that the Krylov and Tsetlin automata operate correctly.
 
