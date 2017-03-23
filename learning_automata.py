@@ -181,6 +181,7 @@ class Linear(LA):
         self.average_time = 0
         self.act1 = 0
         self.act2 = 0
+        self.n = 0
 
     def find_action_distribution(self):
         '''Find the probability distribution of the action vector.'''
@@ -248,27 +249,30 @@ class Linear(LA):
             # n = 0
             while(max(self.p) < 0.9):
                 self.environment_response()
+                self.n += 1
                 # print(self.p)
                 # print(self.last_action)
                 # if(n == 10000):
                 #     break
                 # n += 1
-        if(self.p[0] >= 0.9):
             self.action_average = self.act1 / (self.act1 + self.act2)
-        else:
-            self.action_average = 0
 
     def find_best_lambda(self, low=0, high=0.99, desired_accuracy=0.95):
-        min_k = 0
+        min_k = self.k
+        self.n = 0
+        m = 0
         while(low < high):
             self.act1 = 0
             self.act2 = 0
-            self.simulate(5)
-            print("Low = " + str(low) + " High = " + str(high) + " Acc is " + str(self.action_average >= desired_accuracy))
+            m += 1
+            self.simulate(10)
+            # print("Low = " + str(low) + " High = " + str(high) + " Acc i
+            # s " + str(self.action_average >= desired_accuracy))
             if(self.action_average >= desired_accuracy):
                 high = self.k
                 min_k = self.k
             else:
                 low = self.k
             self.k = (low + high) / 2
+        self.n = int(self.n / m)
         return 1 - min_k
