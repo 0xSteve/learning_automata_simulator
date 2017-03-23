@@ -103,7 +103,8 @@ class Tsetlin(LA):
         '''Determine the next state of the learner from the perspective
         of the teacher.'''
         response = uniform(0, 1)
-        # The penality index is the index of the penalty array. Do 2 action for now
+        # The penality index is the index of the penalty array.
+        # Do 2 action for now
         penalty_index = 1
         if(self.current_state <= self.n):
             self.actions[0] += 1
@@ -171,7 +172,7 @@ class Linear(LA):
     # for the sake of simplicity, assume only 2 actions, but parameterize
     # for more.
     # Need a meaningful value for a. Have to check the books for that.
-
+    # k = 1 - lambda
     def __init__(self, a, p, c, k):
         '''p and c are vector quantities.'''
         self.a = a
