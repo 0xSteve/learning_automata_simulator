@@ -27,5 +27,5 @@ c1 = 0.05
 #     print("Krylov # of states required = " + str(f) + "(Estimate)")
 #     c1 += 0.1
 #     c1 = round(c1, 2)
-lri = la.Linear([0.4, 0.6], [c1, c2], 0.9)
-lri.simulate(10)
+lri = la.Linear([0.5, 0.5], [c1, c2], 0.1)
+lri.simulate(1)

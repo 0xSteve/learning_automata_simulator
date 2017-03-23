@@ -193,13 +193,12 @@ class Linear(LA):
         '''Find the next action for a Linear automaton.'''
         is_action = uniform(0, 1)
         action_distribution = self.find_action_distribution()
-        print(action_distribution)
-        print(self.p)
+        print("The action distribution is: " + str(action_distribution))
         # If the cumulative distribution is less than the value, then that
         # is the desired index.
         for i in range(len(action_distribution)):
             if(is_action < action_distribution[i]):
-                return i
+                return i + 1  # element {1,2}
 
     def next_state_on_penalty(self):
         '''Do nothing, for now...'''
@@ -210,7 +209,15 @@ class Linear(LA):
         # so if action 1 is chosen increase by k*p1,
         # otherwise increase p1 by (1-k)p2.
         action = self.action_index()
-        print(action)
+        if(action == 1):
+            # Increase by kp1
+            self.p[0] = self.p[0] * self.k
+            self.p[1] = 1 - self.p[0]
+
+        else:
+            # increase by (1-k)p2
+            self.p[0] = self.p[1] * (1 - self.k)
+            self.p[1] = 1 - self.p[0]
 
     # Not sure exactly what to do with this. Need to do a little more
     # reading to fully comprehend state translations.
@@ -237,3 +244,4 @@ class Linear(LA):
         for i in range(ensemble_size):
             while (max(self.p) < 1):
                 self.environment_response()
+                print(self.p)
