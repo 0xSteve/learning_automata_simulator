@@ -166,3 +166,29 @@ class Krylov(Tsetlin):
 
 class Linear(object):
     '''The Linear Reward-Inaction model (for now).'''
+
+    # This time separate all concerns, no vectors.
+    def __init__(self, c1, c2):
+        self.c1 = c1
+        self.p1 = 0.5  # Always start in the 0.5 state at the beginning.
+        self.c2 = c2
+        self.p2 = 0.5  # Always start in the 0.5 state at the beginning.
+        self.k_r = 0  # k_r = 1 - lambdaR
+
+    def get_cumulative_distrib(self):
+        return 0
+
+    def next_action(self):
+        return 0
+
+    def environment_response(self):
+        return 0
+
+    def do_reward(self):
+        pass
+
+    def do_penalty(self):
+        pass
+
+    def simulate(self):
+        pass
