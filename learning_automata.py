@@ -196,16 +196,18 @@ class Linear(LA):
         '''Find the next action for a Linear automaton.'''
         is_action = uniform(0, 1)
         action_distribution = self.find_action_distribution()
+        # print("The action distrib is " + str(action_distribution))
+        # print("The action is " + str(is_action))
         # If the cumulative distribution is less than the value, then that
         # is the desired index.
         for i in range(len(action_distribution)):
             if(is_action < action_distribution[i]):
                 if(i == 0):
                     self.act1 += 1
-                    print("act1 count " + str(self.act1))
+                    # print("act1 count " + str(self.act1))
                 else:
                     self.act2 += 1
-                    print("act2 count " + str(self.act2))
+                    # print("act2 count " + str(self.act2))
                 return i + 1  # element {1,2}
 
     def next_state_on_penalty(self):
@@ -246,43 +248,31 @@ class Linear(LA):
     def simulate(self, ensemble_size):
         '''Assume that the depth of the automaton is determined by k >= n
            depth of the automaton.'''
-        # This definition of the simulation can always be changed.
-        # I will need to use max(list) for this to avoid numpy. In this
-        # case, the list is the action probability vector p.
-        sigma = []
-        sign = []
-        for i in range(ensemble_size):
-            # Pick an action!
-            self.last_action = self.action_index()
-            n = 0
-            while (max(self.p) < 1):
-                self.environment_response()
-                n += 1
-            sigma.append(self.p)
-            sign.append(n)
-        temp = np.array(sigma)
-        self.action_average = self.act1 / (self.act1 + self.act2)
-        temp = np.array(sign)
-        self.average_time = sum(temp) / ensemble_size
 
-    def find_best_lambda(self, low=0.01, high=0.99, desired_accuracy=0.95):
-        mini = 0
-        while(low < high):
-            mid = (low + high) / 2
-            self.k = mid
+        for i in range(ensemble_size):
+            self.last_action = self.action_index()
+            while(max(self.p) < 0.99):
+                self.environment_response()
+                # print("the prob vector is " + str(self.p))
+            # The action average
+            self.action_average = self.act1 / (self.act1 + self.act2)
+
+    def find_best_lambda(self, low=0.0001, high=0.9999, desired_accuracy=0.95):
+        last_computed = -1  # make sure this fails the first time.
+        while(low <= high):
+            self.k = (high + low) / 2
             self.act1 = 0
             self.act2 = 0
-            self.simulate(10000)
-            # print("Low " + str(low) + " High " + str(high))
-            # print("Average action: " + str(self.action_average))
-            computed_accuracy = round(self.action_average, 2)
-            # print("The computed accuracy is " + str(computed_accuracy))
+            self.simulate(1000)
+            print("Low " + str(low) + " High " + str(high))
+            computed_accuracy = self.action_average
+            print("The computed accuracy is " + str(computed_accuracy))
             # print("The desired accuracy is " + str(desired_accuracy))
             if(computed_accuracy >= desired_accuracy):
-                high = mid
-                if(mini == mid):
-                    break
-                mini = mid
+                break
+            last_computed = computed_accuracy
+            if(last_computed >= computed_accuracy):
+                low += 0.01
             else:
-                low = mid
-        return 1 - mini
+                high -= 0.01
+        return self.k
