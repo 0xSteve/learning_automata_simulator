@@ -173,27 +173,28 @@ class Linear(LA):
     # for more.
     # Need a meaningful value for a. Have to check the books for that.
     # k = 1 - lambda
-    def __init__(self, a, p, c, k):
+    def __init__(self, p, c, k):
         '''p and c are vector quantities.'''
-        self.a = a
-        self. p = p
+        self.p = p
         self.c = c
         self.k = k
 
-    def find_action_distribution(self, p):
+    def find_action_distribution(self):
         '''Find the probability distribution of the action vector.'''
         action_distribution = []
         sigma = 0
-        for i in range(len(action_distribution)):
-            sigma += p[i]
-            action_distribution.append[sigma]
+        for i in range(len(self.p)):
+            sigma += self.p[i]
+            action_distribution.append(sigma)
 
         return action_distribution
 
-    def action_index(self, p):
+    def action_index(self):
         '''Find the next action for a Linear automaton.'''
         is_action = uniform(0, 1)
-        action_distribution = self.find_action_distribution(self.p)
+        action_distribution = self.find_action_distribution()
+        print(action_distribution)
+        print(self.p)
         # If the cumulative distribution is less than the value, then that
         # is the desired index.
         for i in range(len(action_distribution)):
@@ -205,14 +206,11 @@ class Linear(LA):
         pass
 
     def next_state_on_reward(self):
-        '''increase probabilities by a factor of a.'''
-
-        # Before getting too deep into defining this. Note that the
-        # probability of choosing an action is determined by p1 p2, pn.
-        # This function needs to compute the probability of selecting an
-        # action. It does not make linear state translations like the
-        # previous automatons.
-        pass
+        '''increase probabilities by a factor of k.'''
+        # so if action 1 is chosen increase by k*p1,
+        # otherwise increase p1 by (1-k)p2.
+        action = self.action_index()
+        print(action)
 
     # Not sure exactly what to do with this. Need to do a little more
     # reading to fully comprehend state translations.
