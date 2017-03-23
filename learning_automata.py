@@ -265,11 +265,12 @@ class Linear(LA):
         temp = np.array(sign)
         self.average_time = sum(temp) / ensemble_size
 
-    def find_best_lambda(self, low=0, high=99, desired_accuracy=0.95):
+    def find_best_lambda(self, low=0, high=1, desired_accuracy=0.95):
         mini = 0
         while(low < high):
             mid = (low + high) / 2
             self.k = mid
+            self.p = [0.5, 0.5]
             self.act1 = 0
             self.act2 = 0
             self.simulate(10000)
@@ -281,9 +282,7 @@ class Linear(LA):
             print(computed_accuracy >= desired_accuracy)
             if(computed_accuracy >= desired_accuracy):
                 high = mid
-                if(mini == mid):
-                    break
-                mini = mid - 1
+                mini = mid
             else:
-                low = mid + 1
+                low = mid
         return 1 - mini
