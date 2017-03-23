@@ -253,30 +253,13 @@ class Linear(LA):
             self.last_action = self.action_index()
             while(max(self.p) < 0.99):
                 self.environment_response()
-<<<<<<< HEAD
-                # print("the prob vector is " + str(self.p))
-            # The action average
+
             self.action_average = self.act1 / (self.act1 + self.act2)
 
     def find_best_lambda(self, low=0, high=1, desired_accuracy=0.95):
         while(low < high):
-            self.k = (high + low) / 2
-=======
-                n += 1
-            sigma.append(self.p)
-            sign.append(n)
-        temp = np.array(sigma)
-        self.action_average = self.act1 / (self.act1 + self.act2)
-        temp = np.array(sign)
-        self.average_time = sum(temp) / ensemble_size
-
-    def find_best_lambda(self, low=0, high=1, desired_accuracy=0.95):
-        mini = 0
-        while(low < high):
             mid = (low + high) / 2
             self.k = mid
-            self.p = [0.5, 0.5]
->>>>>>> master
             self.act1 = 0
             self.act2 = 0
             self.p = [0.5, 0.5]
@@ -285,18 +268,8 @@ class Linear(LA):
             computed_accuracy = self.action_average
             print("The computed accuracy is " + str(computed_accuracy))
             # print("The desired accuracy is " + str(desired_accuracy))
-<<<<<<< HEAD
             if(computed_accuracy > desired_accuracy):
                 high = self.k
             else:
                 low = self.k
         return 1 - self.k
-=======
-            print(computed_accuracy >= desired_accuracy)
-            if(computed_accuracy >= desired_accuracy):
-                high = mid
-                mini = mid
-            else:
-                low = mid
-        return 1 - mini
->>>>>>> master
