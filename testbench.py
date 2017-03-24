@@ -28,19 +28,19 @@ c1 = 0.05
 #     c1 += 0.1
 #     c1 = round(c1, 2)
 
-for i in range(0, 7):
-    lri = la.Linear([0.5, 0.5], [c1, c2], 0.1)
-    best = lri.find_best_lambda()
-    print("c1 = " + str(c1) + " c2 = " + str(c2))
-    print("Best lambda approaches: " + str(best))
-    print("Mean time to converge in steps = " + str(lri.n))
-    c1 += 0.1
-    c1 = round(c1, 2)
-# lri = la.Linear([0.5, 0.5], [c1, c2], 0.1)
-# # lri.environment_response()
-# # print(lri.p)
-# # lri.simulate(1)
-# # print("=========================================")
+# for i in range(0, 7):
+#     lri = la.Linear([0.5, 0.5], [c1, c2], 0.1)
+#     best = lri.find_best_lambda()
+#     print("c1 = " + str(c1) + " c2 = " + str(c2))
+#     print("Best lambda approaches: " + str(best))
+#     print("Mean time to converge in steps = " + str(lri.n))
+#     c1 += 0.1
+#     c1 = round(c1, 2)
+lri = la.Linear(0.05, 0.7)
+for i in range(10):
+    a = lri.next_action()
+    print(a)
+print("=========================================")
 # # lri = la.Linear([0.5, 0.5], [c1, c2], 0.2)
 # # lri.simulate(1)
 # # print("=========================================")

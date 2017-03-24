@@ -176,9 +176,11 @@ class Linear(object):
         self.k_r = 0  # k_r = 1 - lambdaR
 
     def next_action(self):
-        randy = uniform(0,1)  # Throwback to Archer.to
-
-        return 0
+        randy = uniform(0, 1)  # Throwback to Archer.
+        if(randy < self.p1):
+            # Choose action 1.
+            return 1
+        return 2
 
     def environment_response(self):
         # For now let's always give a reward.
@@ -195,4 +197,16 @@ class Linear(object):
         pass
 
     def simulate(self):
-        pass
+        a1_counter = 0
+        a2_counter = 0
+
+        while(True):
+            if(self.p1 or self.p2 > 0.4):
+                # Close enough to 1.
+                # Treat as convergence.
+                break
+            if(self.next_action() == 1):
+                # Do action 1
+            else:
+                # Do action 2
+        return 0  # Return the action average.
