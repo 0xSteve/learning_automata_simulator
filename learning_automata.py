@@ -182,9 +182,14 @@ class Linear(object):
             return 1
         return 2
 
-    def environment_response(self):
+    def environment_response(self, action):
         # For now let's always give a reward.
-        return 0
+        rando = uniform(0, 1)
+        penalty = self.c2
+        if(action == 1):
+            penalty = self.c1
+
+        return int(rando < penalty)
 
     def do_reward(self, action):
         if(action == 2):
