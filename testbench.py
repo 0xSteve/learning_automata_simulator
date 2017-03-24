@@ -39,8 +39,10 @@ c1 = 0.05
 lri = la.Linear(0.05, 0.7)
 for i in range(10):
     a = lri.next_action()
-    print(a)
-print("=========================================")
+    b = lri.environment_response(a)
+    print("The action is: " + str(a))
+    print("The response is: " + str(b))
+    print("=========================================")
 # # lri = la.Linear([0.5, 0.5], [c1, c2], 0.2)
 # # lri.simulate(1)
 # # print("=========================================")
