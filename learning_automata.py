@@ -199,14 +199,18 @@ class Linear(object):
     def simulate(self):
         a1_counter = 0
         a2_counter = 0
+        action = 0
 
         while(True):
             if(self.p1 or self.p2 > 0.4):
                 # Close enough to 1.
                 # Treat as convergence.
                 break
-            if(self.next_action() == 1):
+            action = self.next_action()
+            if(action == 1):
                 # Do action 1
+                a1_counter += 1
             else:
                 # Do action 2
+                a2_counter += 1
         return 0  # Return the action average.
