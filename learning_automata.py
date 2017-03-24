@@ -184,8 +184,12 @@ class Linear(object):
     def environment_response(self):
         return 0
 
-    def do_reward(self):
-        pass
+    def do_reward(self, action):
+        if(action == 2):
+            self.p1 = self.k * self.p1
+        else:
+            self.p1 = (1 - self.k) * self.p2
+        self.p2 = 1 - self.p1
 
     def do_penalty(self):
         pass
