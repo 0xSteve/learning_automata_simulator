@@ -173,7 +173,7 @@ class Linear(object):
         self.p1 = 0.5  # Always start in the 0.5 state at the beginning.
         self.c2 = c2
         self.p2 = 0.5  # Always start in the 0.5 state at the beginning.
-        self.k_r = 0  # k_r = 1 - lambdaR
+        self.k_r = 0  # k_r = 1 - lambdaR 0 < k_r < 1.
 
     def next_action(self):
         randy = uniform(0, 1)  # Throwback to Archer.
@@ -193,21 +193,23 @@ class Linear(object):
 
     def do_reward(self, action):
         if(action == 2):
-            self.p1 = self.k * self.p1
+            self.p1 = self.k_r * self.p1
         else:
-            self.p1 = (1 - self.k) * self.p2
+            self.p1 = 1 - (self.k_r * self.p2)
         self.p2 = 1 - self.p1
 
     def do_penalty(self):
         pass
 
-    def simulate(self):
+    def simulate(self, k_r):
         a1_counter = 0
         a2_counter = 0
         action = 0
-
+        self.p1 = 0.5
+        self.p2 = 0.5
+        self.k_r = k_r
         while(True):
-            if(self.p1 or self.p2 > 0.95):
+            if(self.p1 > 0.98 or self.p2 > 0.98):
                 # Close enough to 1.
                 # Treat as convergence.
                 break
@@ -218,5 +220,12 @@ class Linear(object):
             else:
                 # Do action 2
                 a2_counter += 1
+            b = self.environment_response(action)
+            if(b == 0):
+                # Reward.
+                self.do_reward(action)
+            # print("The action is: " + str(action)
+            # + " The response is: " + str(b))
+            # print("p1 = " + str(self.p1) + " p2 = " + str(self.p2))
         # Return the action average.
         return (a1_counter / (a1_counter + a2_counter))

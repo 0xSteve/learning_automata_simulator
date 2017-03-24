@@ -37,12 +37,16 @@ c1 = 0.05
 #     c1 += 0.1
 #     c1 = round(c1, 2)
 lri = la.Linear(0.05, 0.7)
-for i in range(10):
-    a = lri.next_action()
-    b = lri.environment_response(a)
-    print("The action is: " + str(a))
-    print("The response is: " + str(b))
+k = 0.00
+for i in range(1, 100):
+    k += 0.01
+    ave = lri.simulate(k)
+    # b = lri.environment_response(1)
+    print("The action average is: " + str(ave))
+    print("k = " + str(k) + " iteration number: " + str(i))
+    # print("The response is: " + str(b))
     print("=========================================")
+
 # # lri = la.Linear([0.5, 0.5], [c1, c2], 0.2)
 # # lri.simulate(1)
 # # print("=========================================")
