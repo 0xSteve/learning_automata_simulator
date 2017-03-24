@@ -175,13 +175,13 @@ class Linear(object):
         self.p2 = 0.5  # Always start in the 0.5 state at the beginning.
         self.k_r = 0  # k_r = 1 - lambdaR
 
-    def get_cumulative_distrib(self):
-        return 0
-
     def next_action(self):
+        randy = uniform(0,1)  # Throwback to Archer.to
+
         return 0
 
     def environment_response(self):
+        # For now let's always give a reward.
         return 0
 
     def do_reward(self, action):
