@@ -37,15 +37,19 @@ c1 = 0.05
 #     c1 += 0.1
 #     c1 = round(c1, 2)
 lri = la.Linear(0.05, 0.7)
-k = 0.00
-for i in range(1, 100):
-    k += 0.01
-    ave = lri.find_ensemble_average(1000, k)
-    # b = lri.environment_response(1)
-    print("Converges to correct action: " + str(ave))
-    print("k = " + str(k) + " iteration number: " + str(i))
-    # print("The response is: " + str(b))
-    print("=========================================")
+a = lri.find_optimal_kr(1000)
+b = lri.find_accuracy(1000, a)
+print("The optimal K_r value is: " + str(a))
+print("The accuracy for k_r = " + str(a) + " is: " + str(b))
+# k = 0.00
+# for i in range(1, 100):
+#     k += 0.01
+#     ave = lri.find_ensemble_average(1000, k)
+#     # b = lri.environment_response(1)
+#     print("Converges to correct action: " + str(ave))
+#     print("k = " + str(k) + " iteration number: " + str(i))
+#     # print("The response is: " + str(b))
+#     print("=========================================")
 
 # # lri = la.Linear([0.5, 0.5], [c1, c2], 0.2)
 # # lri.simulate(1)

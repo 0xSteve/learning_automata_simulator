@@ -241,13 +241,14 @@ class Linear(object):
 
         return ensemble_average
 
-    def find_optimal_kr(self, low=0.0001, high=0.9999,
+    def find_optimal_kr(self, ensemble_size, low=0.0001, high=0.9999,
                         desired_accuracy=0.95):
         L = low
         H = high
-        kr_mid = (L + H) / 2
-        accuracy = self.find_accuracy(1000, kr_mid)
-        while(self.percent_diff(L, H) > 0.05):
+
+        while(self.percent_diff(L, H) >= 0.05):
+            kr_mid = (L + H) / 2
+            accuracy = self.find_accuracy(ensemble_size, kr_mid)
             if(accuracy >= desired_accuracy):
                 H = kr_mid
             else:
