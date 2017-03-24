@@ -40,9 +40,9 @@ lri = la.Linear(0.05, 0.7)
 k = 0.00
 for i in range(1, 100):
     k += 0.01
-    ave = lri.simulate(k)
+    ave = lri.find_ensemble_average(1000, k)
     # b = lri.environment_response(1)
-    print("The action average is: " + str(ave))
+    print("Converges to correct action: " + str(ave))
     print("k = " + str(k) + " iteration number: " + str(i))
     # print("The response is: " + str(b))
     print("=========================================")

@@ -228,4 +228,18 @@ class Linear(object):
             # + " The response is: " + str(b))
             # print("p1 = " + str(self.p1) + " p2 = " + str(self.p2))
         # Return the action average.
-        return (a1_counter / (a1_counter + a2_counter))
+        return round(a1_counter / (a1_counter + a2_counter), 0)
+
+    def find_accuracy(self, ensemble_size, k_r):
+
+        ensemble_average = 0
+
+        for i in range(0, ensemble_size):
+            ensemble_average += self.simulate(k_r)
+
+        ensemble_average = ensemble_average / ensemble_size
+
+        return ensemble_average
+
+    def find_optimal_kr(self):
+        pass
