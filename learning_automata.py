@@ -174,6 +174,7 @@ class Linear(object):
         self.c2 = c2
         self.p2 = 0.5  # Always start in the 0.5 state at the beginning.
         self.k_r = 0  # k_r = 1 - lambdaR 0 < k_r < 1.
+        self.n = 0
 
     def next_action(self):
         randy = uniform(0, 1)  # Throwback to Archer.
@@ -208,6 +209,7 @@ class Linear(object):
         self.p1 = 0.5
         self.p2 = 0.5
         self.k_r = k_r
+        self.n = 0
         while(True):
             if(self.p1 > 0.98 or self.p2 > 0.98):
                 # Close enough to 1.
@@ -224,6 +226,7 @@ class Linear(object):
             if(b == 0):
                 # Reward.
                 self.do_reward(action)
+            self.n += 1
             # print("The action is: " + str(action)
             # + " The response is: " + str(b))
             # print("p1 = " + str(self.p1) + " p2 = " + str(self.p2))
@@ -236,6 +239,7 @@ class Linear(object):
 
         for i in range(0, ensemble_size):
             ensemble_average += self.simulate(k_r)
+            self.n += 1
 
         ensemble_average = ensemble_average / ensemble_size
 

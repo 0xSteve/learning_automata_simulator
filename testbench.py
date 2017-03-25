@@ -27,20 +27,24 @@ c1 = 0.05
 #     print("Krylov # of states required = " + str(f) + "(Estimate)")
 #     c1 += 0.1
 #     c1 = round(c1, 2)
-
-# for i in range(0, 7):
-#     lri = la.Linear([0.5, 0.5], [c1, c2], 0.1)
-#     best = lri.find_best_lambda()
-#     print("c1 = " + str(c1) + " c2 = " + str(c2))
-#     print("Best lambda approaches: " + str(best))
-#     print("Mean time to converge in steps = " + str(lri.n))
-#     c1 += 0.1
-#     c1 = round(c1, 2)
-lri = la.Linear(0.05, 0.7)
-a = lri.find_optimal_kr(1000)
-b = lri.find_accuracy(1000, a)
-print("The optimal K_r value is: " + str(a))
-print("The accuracy for k_r = " + str(a) + " is: " + str(b))
+c1 = 0.05
+for i in range(0, 7):
+    lri = la.Linear(c1, 0.7)
+    a = lri.find_optimal_kr(1000)
+    b = lri.find_accuracy(1000, a)
+    print("=============================================================")
+    print("The optimal K_r value is: " + str(a))
+    print("The optimal lambda_r value is: " + str(1 - a))
+    print("The accuracy for k_r = " + str(a) + " is: " + str(b))
+    print("The computation time in iterations is: " + str(lri.n))
+    print("=============================================================")
+    c1 += 0.1
+    c1 = round(c1, 2)
+# lri = la.Linear(0.05, 0.7)
+# a = lri.find_optimal_kr(1000)
+# b = lri.find_accuracy(1000, a)
+# print("The optimal K_r value is: " + str(a))
+# print("The accuracy for k_r = " + str(a) + " is: " + str(b))
 # k = 0.00
 # for i in range(1, 100):
 #     k += 0.01
