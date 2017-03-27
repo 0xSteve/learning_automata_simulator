@@ -15,7 +15,7 @@ for i in range(0, 7):
     lri = la.Linear(c1, 0.7)
     a = lri.find_optimal_kr(1000)
     #  b = lri.find_accuracy(1000, a)
-    lambda_r.append(1-a)
+    lambda_r.append(1 - a)
     n.append(lri.n)
     print("=============================================================")
     print("The optimal K_r value is: " + str(a))
