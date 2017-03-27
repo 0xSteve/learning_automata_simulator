@@ -233,29 +233,66 @@ def next_state_on_penalty(self):
    
 \end{lstlisting}
 
-\section{Question 3}
-Since the code snippets for the $L_{R-I}$ automaton do not shed any insight into the operation of the machine, the test bench has been omitted from within, however it is available on github.  This automaton was quite challenging. 
+\section{Question 3} 
 
 First let us consider state changes in the $L_{R-I}$, since there really are no states, but instead just an interval, $\lbrace0, 1\rbrace$, of possibilities.  Consider the following code-snippet.
 
 \begin{lstlisting}[label={list:first},caption=State Translation in the $L_{R-I}$  automaton.] 
- def next_state_on_penalty(self):
-        '''Do nothing, other than pick a action.'''
-        self.last_action = self.action_index()
-
-    def next_state_on_reward(self):
-        '''increase probabilities by a factor of k.'''
-        # so if action 1 is chosen increase by k*p1,
-        # otherwise increase p1 by (1-k)p2.
-        self.last_action = self.action_index()
-        # print("the next action is " + str(self.last_action))
-        if(self.last_action == 2):
-            # Increase by kp1
-            self.p[0] = self.p[0] * self.k
-            self.p[1] = 1 - self.p[0]
+ def do_reward(self, action):
+        if(action == 2):
+            self.p1 = self.k_r * self.p1
         else:
-            # increase by (1-k)p2
-            self.p[0] = 1 - self.p[1] * self.k
-            self.p[1] = 1 - self.p[0]   
+            self.p1 = 1 - (self.k_r * self.p2)
+        self.p2 = 1 - self.p1
+
+    def do_penalty(self):
+        pass  
+\end{lstlisting}
+It can be seen from the above code-snippet, that when the environment rewards, an action is updated based on the action selected.  When the environment issues a penalty, nothing happens.  The python command \textit{pass} is command that simply does nothing, and is usually used for prototyping.  In this case, pass is included to explicitly show that a penalty does nothing.
+
+From this automaton some interesting things can be observed.  First, let us consider the output of the testbench.py file.  Time complexity has been measured in terms of discrete steps instead of actual time spent in the processor. The physical time, does not represent the number of actions being computed, as many operations can be processed simulatneously, in the background of a system, the time is not accurate.  A corolary to this event is that the number of discrete calls to the program, accurately represent the time complexity, when each action is considered a time unit.  To better understand this, observe the following code snippet.
+\begin{lstlisting}[label={list:first},caption=State Translation in the $L_{R-I}$  automaton.] 
+=============================================================
+The optimal K_r value is: 0.74995
+The optimal lambda_r value is: 0.25005
+The accuracy for k_r = 0.74995 is: 0.963
+The computation time in iterations is: 18
+=============================================================
+=============================================================
+The optimal K_r value is: 0.7811937499999999
+The optimal lambda_r value is: 0.2188062500000001
+The accuracy for k_r = 0.7811937499999999 is: 0.958
+The computation time in iterations is: 26
+=============================================================
+=============================================================
+The optimal K_r value is: 0.7811937499999999
+The optimal lambda_r value is: 0.2188062500000001
+The accuracy for k_r = 0.7811937499999999 is: 0.965
+The computation time in iterations is: 16
+=============================================================
+=============================================================
+The optimal K_r value is: 0.8124374999999999
+The optimal lambda_r value is: 0.18756250000000008
+The accuracy for k_r = 0.8124374999999999 is: 0.953
+The computation time in iterations is: 45
+=============================================================
+=============================================================
+The optimal K_r value is: 0.874925
+The optimal lambda_r value is: 0.12507500000000005
+The accuracy for k_r = 0.874925 is: 0.976
+The computation time in iterations is: 57
+=============================================================
+=============================================================
+The optimal K_r value is: 0.90616875
+The optimal lambda_r value is: 0.09383125000000003
+The accuracy for k_r = 0.90616875 is: 0.969
+The computation time in iterations is: 160
+=============================================================
+=============================================================
+The optimal K_r value is: 0.96865625                                                                                                  
+The optimal lambda_r value is: 0.031343750000000004                                                                                   
+The accuracy for k_r = 0.96865625 is: 0.977                                                                                           
+The computation time in iterations is: 1298                                                                                           
+=============================================================   
 \end{lstlisting}
 \end{document}
