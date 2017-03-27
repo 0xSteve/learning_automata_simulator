@@ -295,4 +295,10 @@ The accuracy for k_r = 0.96865625 is: 0.977
 The computation time in iterations is: 1298                                                                                           
 =============================================================   
 \end{lstlisting}
+It is observable that as $c1$ approaches $c2$ the number of operations increase exponentially.  It is also observable that as $n \to \infty$, then $\lambda_R \to 0$. Corolary: $c_1 \to c_2$, then $\lambda_R \to 0$ or $k_R \to \infty$.  To get a better understanding of this effect, observe the following graph, Figure \ref{blah}. It can be seen that $\lambda_R$ approaches $0$ as the time complexity goes to infinity.  This is representative of the difficulty of the system.  When the percent difference between penalties of choosing action 1 and action 2 approaches 0, then the time complexity approaches infinity, and the $\lambda_R$ required becomes an undesirably low value.
+\begin{figure}[h!]
+    \centering
+    \includegraphics{plot.png}
+    \caption{$\lambda_R$ Vs. $n$} \label{blah}
+\end{figure}
 \end{document}
