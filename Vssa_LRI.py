@@ -6,7 +6,7 @@ import numpy as np
 # ToDo: Make R action.
 
 
-class Linear(object):
+class Linear_R(object):
     '''The Linear Reward-Inaction model (for now).'''
 
     def __init__(self, c_nparray):
@@ -15,13 +15,6 @@ class Linear(object):
         self.c = c_nparray
         self.k_r = 0  # k_r = 1 - lambdaR 0 < k_r < 1.
         self.n = 0
-
-    # def next_action(self):
-    #     randy = uniform(0, 1)  # Throwback to Archer.
-    #     if(randy < self.p1):
-    #         # Choose action 1.
-    #         return 1
-    #     return 2
 
     def next_action(self):
         randy = uniform(0, 1)  # Throwback to Archer.
