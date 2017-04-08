@@ -19,9 +19,9 @@ class Linear_R(object):
     def next_action(self):
         randy = uniform(0, 1)  # Throwback to Archer.
         index = 0  # Worst case select the first action.
-        print("The p is: " + str(self.p))
+        # print("The p is: " + str(self.p))
         cdf = h.cdf(self.p)
-        print("The cdf is: " + str(cdf))
+        # print("The cdf is: " + str(cdf))
         for i in range(len(self.p)):
             # Not actually looking for p looking for the CDF.
             if(randy < cdf[i]):
@@ -35,11 +35,11 @@ class Linear_R(object):
         return int(rando < penalty)
 
     def do_reward(self, action):
+        self.p[action] += self.a * (1 - self.p[action])
         for i in range(len(self.p)):
-            if(i == action):
-                self.p1 = self.p[i] + (self.a * self.p[i])
-            else:
-                self.p[i] = self.a * self.p[i]
+            if(i != action):
+                # print("i = " + str(i) + ". P = " + str(self.p))
+                self.p[i] = (1 - self.a) * self.p[i]
 
     def do_penalty(self):
         pass
@@ -51,13 +51,13 @@ class Linear_R(object):
         self.a = a
         self.n = 0
         while(True):
-            if(max(self.p) > 0.98):
+            if(max(self.p) > 0.98 or min(self.p) < 0.02):
                 # Close enough to 1.
                 # Treat as convergence.
                 break
             action = self.next_action()
             act[action] += 1
-            print("The next action is: " + str(action + 1))
+            # print("The next action is: " + str(action + 1))
             b = self.environment_response(action)
             if(b == 0):
                 # Reward.
@@ -78,18 +78,18 @@ class Linear_R(object):
 
         return ensemble_average
 
-    def find_optimal_kr(self, ensemble_size, low=0.0001, high=0.9999,
-                        desired_accuracy=0.95):
+    def find_optimal_a(self, ensemble_size, low=1, high=5,
+                       desired_accuracy=0.95):
         L = low
         H = high
 
         while(self.percent_diff(L, H) >= 0.05):
-            kr_mid = (L + H) / 2
-            accuracy = self.find_accuracy(ensemble_size, kr_mid)
+            a_mid = (L + H) / 2
+            accuracy = self.find_accuracy(ensemble_size, a_mid)
             if(accuracy >= desired_accuracy):
-                H = kr_mid
+                H = a_mid
             else:
-                L = kr_mid
+                L = a_mid
         return H
 
     def percent_diff(self, value1, value2):
