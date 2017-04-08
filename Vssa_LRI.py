@@ -19,7 +19,9 @@ class Linear_R(object):
     def next_action(self):
         randy = uniform(0, 1)  # Throwback to Archer.
         index = 0  # Worst case select the first action.
+        print("The p is: " + str(self.p))
         cdf = h.cdf(self.p)
+        print("The cdf is: " + str(cdf))
         for i in range(len(self.p)):
             # Not actually looking for p looking for the CDF.
             if(randy < cdf[i]):
@@ -39,35 +41,26 @@ class Linear_R(object):
         pass
 
     def simulate(self, k_r):
-        a1_counter = 0
-        a2_counter = 0
+        a = np.zeros(len(self.c))
         action = 0
-        self.p1 = 0.5
-        self.p2 = 0.5
+        self.p = np.array(h.make_p(len(self.c)))
         self.k_r = k_r
         self.n = 0
         while(True):
-            if(self.p1 > 0.98 or self.p2 > 0.98):
+            if(max(self.p) > 0.98):
                 # Close enough to 1.
                 # Treat as convergence.
                 break
             action = self.next_action()
-            if(action == 1):
-                # Do action 1
-                a1_counter += 1
-            else:
-                # Do action 2
-                a2_counter += 1
+            a[action] += 1
+            print("The next action is: " + str(action + 1))
             b = self.environment_response(action)
             if(b == 0):
                 # Reward.
                 self.do_reward(action)
             self.n += 1
-            # print("The action is: " + str(action)
-            # + " The response is: " + str(b))
-            # print("p1 = " + str(self.p1) + " p2 = " + str(self.p2))
         # Return the action average.
-        return round(a1_counter / (a1_counter + a2_counter), 0)
+        return round(a[1] / sum(a), 0)
 
     def find_accuracy(self, ensemble_size, k_r):
 
