@@ -33,11 +33,7 @@ class Linear_R(object):
         return int(rando < penalty)
 
     def do_reward(self, action):
-        if(action == 2):
-            self.p1 = self.k_r * self.p1
-        else:
-            self.p1 = 1 - (self.k_r * self.p2)
-        self.p2 = 1 - self.p1
+        self.p[action] = self.k_r * self.p[action]
 
     def do_penalty(self):
         pass
