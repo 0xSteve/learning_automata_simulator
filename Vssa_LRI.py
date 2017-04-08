@@ -13,7 +13,7 @@ class Linear_R(object):
         '''Create a new Linear Reward-Inaction object.'''
         self.p = np.array(h.make_p(len(c_nparray)))
         self.c = c_nparray
-        self.k_r = 0  # k_r = 1 - lambdaR 0 < k_r < 1.
+        self.a = 0  # gi = a * pi
         self.n = 0
 
     def next_action(self):
@@ -35,16 +35,20 @@ class Linear_R(object):
         return int(rando < penalty)
 
     def do_reward(self, action):
-        self.p[action] = self.k_r * self.p[action]
+        for i in range(len(self.p)):
+            if(i == action):
+                self.p1 = self.p[i] + (self.a * self.p[i])
+            else:
+                self.p[i] = self.a * self.p[i]
 
     def do_penalty(self):
         pass
 
-    def simulate(self, k_r):
-        a = np.zeros(len(self.c))
+    def simulate(self, a):
+        act = np.zeros(len(self.c))
         action = 0
         self.p = np.array(h.make_p(len(self.c)))
-        self.k_r = k_r
+        self.a = a
         self.n = 0
         while(True):
             if(max(self.p) > 0.98):
@@ -52,7 +56,7 @@ class Linear_R(object):
                 # Treat as convergence.
                 break
             action = self.next_action()
-            a[action] += 1
+            act[action] += 1
             print("The next action is: " + str(action + 1))
             b = self.environment_response(action)
             if(b == 0):
@@ -60,14 +64,14 @@ class Linear_R(object):
                 self.do_reward(action)
             self.n += 1
         # Return the action average.
-        return round(a[1] / sum(a), 0)
+        return round(act[1] / sum(act), 0)
 
-    def find_accuracy(self, ensemble_size, k_r):
+    def find_accuracy(self, ensemble_size, a):
 
         ensemble_average = 0
 
         for i in range(0, ensemble_size):
-            ensemble_average += self.simulate(k_r)
+            ensemble_average += self.simulate(a)
             self.n += 1
 
         ensemble_average = ensemble_average / ensemble_size
