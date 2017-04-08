@@ -13,3 +13,13 @@ def make_p(count):
 def make_c(count):
     # I might need this, who knows?
     pass
+
+
+def cdf(p_vector):
+    '''get the cumulative distribution vector for a given input vector.'''
+    cdf = []
+    sigma = 0
+    for i in range(len(p_vector)):
+        sigma += p_vector[i]
+        cdf.append(sigma)
+    return cdf
