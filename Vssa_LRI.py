@@ -9,18 +9,30 @@ import numpy as np
 class Linear(object):
     '''The Linear Reward-Inaction model (for now).'''
 
-    def __init__(self, num_actions):
+    def __init__(self, c_nparray):
         '''Create a new Linear Reward-Inaction object.'''
-        self.p = np.array(h.make_p(num_actions))
+        self.p = np.array(h.make_p(len(c_nparray)))
+        self.c = c_nparray
         self.k_r = 0  # k_r = 1 - lambdaR 0 < k_r < 1.
         self.n = 0
 
+    # def next_action(self):
+    #     randy = uniform(0, 1)  # Throwback to Archer.
+    #     if(randy < self.p1):
+    #         # Choose action 1.
+    #         return 1
+    #     return 2
+
     def next_action(self):
         randy = uniform(0, 1)  # Throwback to Archer.
-        if(randy < self.p1):
-            # Choose action 1.
-            return 1
-        return 2
+        index = 0  # Worst case select the first action.
+        cdf = h.cdf(self.p)
+        for i in range(len(self.p)):
+            # Not actually looking for p looking for the CDF.
+            if(randy < cdf[i]):
+                index = i
+                break
+        return index
 
     def environment_response(self, action):
         # For now let's always give a reward.
