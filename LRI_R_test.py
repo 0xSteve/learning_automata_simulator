@@ -7,4 +7,5 @@ lri = vssa.Linear_R(c)
 print("The probability of next action is: " + str(lri.p))
 # Test the next action function
 for i in range(10):
-    print("The next action is: " + str(lri.next_action()))
+    # print("The next action is: " + str(lri.next_action()))
+    print("The environment response is: " + str(lri.environment_response(1)))

@@ -28,12 +28,8 @@ class Linear_R(object):
         return index
 
     def environment_response(self, action):
-        # For now let's always give a reward.
         rando = uniform(0, 1)
-        penalty = self.c2
-        if(action == 1):
-            penalty = self.c1
-
+        penalty = self.c[action]
         return int(rando < penalty)
 
     def do_reward(self, action):
